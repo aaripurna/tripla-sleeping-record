@@ -95,4 +95,21 @@ RSpec.describe "User Request", type: :request do
       end
     end
   end
+
+  describe "GET #index" do
+    let!(:user1) { create(:user, name: 'Foo Bar') }
+    let!(:user2) { create(:user, name: 'Foo Bar') }
+    let!(:user3) { create(:user, name: 'Foo Bar') }
+    let!(:user4) { create(:user, name: 'Foo Bar') }
+
+    it 'returns status 200' do
+      get api_v1_users_path
+      expect(response).to have_http_status(:ok)
+    end
+
+    it 'returns user object array' do
+      get api_v1_users_path
+      expect(response).to match_contract(UserListRecordContract)
+    end
+  end
 end

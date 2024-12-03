@@ -28,6 +28,20 @@ describe 'Users API' do
           run_test!
       end
     end
+
+    get 'Fetch List Of Users' do
+      tags 'User'
+      produces 'application/json'
+      let!(:user1) { create(:user, name: 'Foo Bar') }
+      let!(:user2) { create(:user, name: 'Foo Bar') }
+      let!(:user3) { create(:user, name: 'Foo Bar') }
+      let!(:user4) { create(:user, name: 'Foo Bar') }
+
+      response 200, 'Ok' do
+        schema '$ref' => '#components/schemas/user_list_record'
+        run_test!
+      end
+    end
   end
 
   path "/api/v1/users/{id}" do

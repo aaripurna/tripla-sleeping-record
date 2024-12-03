@@ -28,3 +28,18 @@ class UserSingleRecordContract < Dry::Validation::Contract
     end
   end
 end
+
+class UserListRecordContract < Dry::Validation::Contract
+  params do
+    required(:data).array(:hash) do
+      required(:attributes).schema(UserRecordContract.schema)
+      required(:id).filled(:string)
+      required(:type).filled(:string, eql?: 'user')
+    end
+
+    required(:meta).hash do
+      required(:pagination).schema(PaginationContract.schema)
+    end
+    required(:links).schema(PaginationLinkContract.schema)
+  end
+end

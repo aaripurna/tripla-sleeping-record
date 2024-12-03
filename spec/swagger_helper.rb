@@ -56,6 +56,49 @@ RSpec.configure do |config|
               }
             }
           },
+          user_list_record: {
+            type: :object,
+            properties: {
+              data: {
+                type: :array,
+                items: {
+                  type: :object,
+                  properties: {
+                    id: { type: :string, example: '10' },
+                    type: { type: :string, example: 'user' },
+                    attributes: { '$ref' => '#/components/schemas/user_record' }
+                  }
+                }
+              },
+              links: { '$ref' => '#/components/schemas/pagination_links' },
+              meta: {
+                type: :object,
+                properties: {
+                  pagination: { '$ref' => '#/components/schemas/pagination_details' }
+                }
+              }
+            }
+          },
+          pagination_links: {
+            type: :object,
+            properties: {
+              self: { type: :string, example: "/api/v1/path-to-resources?page=3&limit=32" },
+              first: { type: :string, example: "/api/v1/path-to-resources?page=1&limit=32" },
+              next: { type: :string, example: "/api/v1/path-to-resources?page=4&limit=32", nullable: true },
+              prev: { type: :string, example: "/api/v1/path-to-resources?page=2&limit=32", nullable: true },
+              last: { type: :string, example: "/api/v1/path-to-resources?page=6&limit=32" }
+            }
+          },
+          pagination_details: {
+            type: :object,
+            properties: {
+              page: { type: :integer, example: 3 },
+              next: { type: :integer, nullable: true, example: 4 },
+              prev: { type: :integer, nullable: true, example: 2 },
+              count: { type: :integer, example: 192 },
+              limit: { type: :integer, example: 32 }
+            }
+          },
           error_record: {
             type: :object,
             properties: {
