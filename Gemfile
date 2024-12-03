@@ -42,4 +42,7 @@ group :development, :test do
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
   gem "dotenv", require: "dotenv/load"
+  gem "rspec-rails", "~> 7.0.0"
+  gem "factory_bot_rails"
+  gem "database_cleaner-active_record"
 end
