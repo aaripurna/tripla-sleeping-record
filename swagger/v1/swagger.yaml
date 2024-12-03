@@ -105,6 +105,71 @@ paths:
                         format: date-time
         '404':
           description: Not Found
+    put:
+      summary: Update user detail
+      tags:
+      - User
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: '1'
+                  type:
+                    type: string
+                    example: user
+                  attributes:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 10
+                      name:
+                        type: string
+                        example: Samson
+                      created_at:
+                        type: string
+                        format: date-time
+                      updated_at:
+                        type: string
+                        format: date-time
+        '404':
+          description: Not Found
+        '422':
+          description: Unprocessable entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      name:
+                        type: array
+                        item:
+                          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required:
+              - name
 servers:
 - url: https://{defaultHost}
   variables:

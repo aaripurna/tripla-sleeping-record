@@ -15,6 +15,16 @@ module Api
         render json: UserSerializer.new(object: user), status: :ok
       end
 
+      def update
+        user = User.find(params[:id])
+
+        if user.update(user_create_params)
+          render json: UserSerializer.new(object: user), status: :ok
+        else
+          render json: ErrorSerializer.new(user.errors), status: :unprocessable_entity
+        end
+      end
+
       private
       def user_create_params
         params.permit(:name)

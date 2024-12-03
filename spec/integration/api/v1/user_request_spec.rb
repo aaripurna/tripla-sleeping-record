@@ -87,5 +87,67 @@ describe 'Users API' do
         run_test!
       end
     end
+
+    put 'Update user detail' do
+      tags 'User'
+      produces 'application/json'
+      consumes 'application/json'
+      parameter name: :id, type: :integer, in: :path
+      parameter name: :user_params, in: :body, schema: {
+        type: :object,
+        properties: {
+          name: { type: :string }
+        },
+        required: %i[name]
+      }
+
+      let!(:user_data) { create(:user) }
+
+      response 200, 'created' do
+        schema type: :object,
+          properties: {
+            id: { type: :string, example: '1' },
+            type: { type: :string, example: 'user' },
+            attributes: {
+              type: :object,
+              properties: {
+                id: { type: :integer, example: 10 },
+                name: { type: :string, example: 'Samson' },
+                created_at: { type: :string, format: 'date-time' },
+                updated_at: { type: :string, format: 'date-time' }
+              }
+            }
+          }
+
+        let(:id) { user_data.id }
+        let(:user_params) { { name: 'The Name' } }
+        run_test!
+      end
+
+      response 404, 'Not Found' do
+        let(:id) { 4_0000 }
+        let(:user_params) { { name: 'The Name' } }
+        run_test!
+      end
+
+      response 422, 'Unprocessable entity' do
+        schema type: :object,
+          properties: {
+            errors: {
+              type: :object,
+              properties: {
+                name: {
+                  type: :array,
+                  item: { type: :string }
+                }
+              }
+            }
+          }
+
+        let(:id) { user_data.id }
+        let(:user_params) { { name: nil } }
+        run_test!
+      end
+    end
   end
 end

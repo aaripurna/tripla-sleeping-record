@@ -59,4 +59,40 @@ RSpec.describe "User Request", type: :request do
       end
     end
   end
+
+  describe 'PUT #update' do
+    let!(:user) { create(:user, name: 'Foo Bar') }
+
+    context 'data not exists' do
+      it 'returns 404' do
+        put api_v1_user_path(2000), params: { name: 'Foo' }
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    context 'data invalid' do
+      it 'returns 422' do
+        put api_v1_user_path(user.id), params: { name: nil }
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+    end
+
+    context 'data valid' do
+      it 'returns 200' do
+        put api_v1_user_path(user.id), params: { name: 'New Name' }
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'returns the user object' do
+        put api_v1_user_path(user.id), params: { name: 'New Name' }
+        expect(response).to match_contract(UserSingleRecordContract)
+      end
+
+      it 'updates the record' do
+        put api_v1_user_path(user.id), params: { name: 'New Name' }
+        user.reload
+        expect(user.name).to eq('New Name')
+      end
+    end
+  end
 end
