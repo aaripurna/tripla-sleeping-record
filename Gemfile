@@ -47,4 +47,5 @@ group :development, :test do
   gem "factory_bot_rails"
   gem "database_cleaner-active_record"
   gem "shoulda-matchers", "~> 6.0"
+  gem "dry-validation", "~> 1.10"
 end
