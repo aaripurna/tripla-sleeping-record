@@ -53,4 +53,39 @@ describe 'Users API' do
       end
     end
   end
+
+  path "/api/v1/users/{id}" do
+    get 'Get User Detail' do
+      tags 'User'
+      produces 'application/json'
+      parameter name: :id, type: :integer, in: :path
+
+      let!(:user) { create(:user) }
+
+      response 200, 'Ok' do
+        schema type: :object,
+            properties: {
+              id: { type: :string, example: '1' },
+              type: { type: :string, example: 'user' },
+              attributes: {
+                type: :object,
+                properties: {
+                  id: { type: :integer, example: 10 },
+                  name: { type: :string, example: 'Samson' },
+                  created_at: { type: :string, format: 'date-time' },
+                  updated_at: { type: :string, format: 'date-time' }
+                }
+              }
+            }
+
+        let(:id) { user.id }
+        run_test!
+      end
+
+      response 404, 'Not Found' do
+        let(:id) { 4_0000 }
+        run_test!
+      end
+    end
+  end
 end

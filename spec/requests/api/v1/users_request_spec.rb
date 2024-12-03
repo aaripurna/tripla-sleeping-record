@@ -36,4 +36,27 @@ RSpec.describe "User Request", type: :request do
       end
     end
   end
+
+  describe 'GET /:id' do
+    let(:user) { create(:user, name: 'Foo Bar') }
+
+    context 'data not exists' do
+      it 'returns 404' do
+        get api_v1_user_path(4_0000)
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    context 'data exists' do
+      it 'returns 200' do
+        get api_v1_user_path(user.id)
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'returns the user object' do
+        get api_v1_user_path(user.id)
+        expect(response).to match_contract(UserSingleRecordContract)
+      end
+    end
+  end
 end

@@ -10,6 +10,11 @@ module Api
         end
       end
 
+      def show
+        user = User.find(params[:id])
+        render json: UserSerializer.new(object: user), status: :ok
+      end
+
       private
       def user_create_params
         params.permit(:name)
