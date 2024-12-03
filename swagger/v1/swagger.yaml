@@ -3,6 +3,52 @@ openapi: 3.0.1
 info:
   title: API V1
   version: v1
+paths:
+  "/api/v1/users":
+    post:
+      summary: Create User
+      tags:
+      - User
+      parameters: []
+      responses:
+        '201':
+          description: created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: '1'
+                  type:
+                    type: string
+                    example: user
+                  attributes:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 10
+                      name:
+                        type: string
+                        example: Samson
+                      created_at:
+                        type: string
+                        format: date-time
+                      updated_at:
+                        type: string
+                        format: date-time
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required:
+              - name
 servers:
 - url: https://{defaultHost}
   variables:
