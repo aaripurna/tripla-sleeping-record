@@ -15,38 +15,14 @@ describe 'Users API' do
       }
 
       response 201, 'created' do
-        schema type: :object,
-          properties: {
-            id: { type: :string, example: '1' },
-            type: { type: :string, example: 'user' },
-            attributes: {
-              type: :object,
-              properties: {
-                id: { type: :integer, example: 10 },
-                name: { type: :string, example: 'Samson' },
-                created_at: { type: :string, format: 'date-time' },
-                updated_at: { type: :string, format: 'date-time' }
-              }
-            }
-          }
+        schema '$ref' => '#/components/schemas/user_single_record'
 
         let(:user) { { name: 'The Name' } }
         run_test!
       end
 
       response 422, 'Unprocessable Entity' do
-        schema type: :object,
-          properties: {
-            errors: {
-              type: :object,
-              properties: {
-                name: {
-                  type: :array,
-                  item: { type: :string }
-                }
-              }
-            }
-          }
+        schema '$ref' => '#components/schemas/error_record'
 
           let(:user) { { name: nil } }
           run_test!
@@ -63,20 +39,7 @@ describe 'Users API' do
       let!(:user) { create(:user) }
 
       response 200, 'Ok' do
-        schema type: :object,
-            properties: {
-              id: { type: :string, example: '1' },
-              type: { type: :string, example: 'user' },
-              attributes: {
-                type: :object,
-                properties: {
-                  id: { type: :integer, example: 10 },
-                  name: { type: :string, example: 'Samson' },
-                  created_at: { type: :string, format: 'date-time' },
-                  updated_at: { type: :string, format: 'date-time' }
-                }
-              }
-            }
+        schema '$ref' => '#/components/schemas/user_single_record'
 
         let(:id) { user.id }
         run_test!
@@ -104,20 +67,7 @@ describe 'Users API' do
       let!(:user_data) { create(:user) }
 
       response 200, 'created' do
-        schema type: :object,
-          properties: {
-            id: { type: :string, example: '1' },
-            type: { type: :string, example: 'user' },
-            attributes: {
-              type: :object,
-              properties: {
-                id: { type: :integer, example: 10 },
-                name: { type: :string, example: 'Samson' },
-                created_at: { type: :string, format: 'date-time' },
-                updated_at: { type: :string, format: 'date-time' }
-              }
-            }
-          }
+        schema '$ref' => '#/components/schemas/user_single_record'
 
         let(:id) { user_data.id }
         let(:user_params) { { name: 'The Name' } }
@@ -131,18 +81,7 @@ describe 'Users API' do
       end
 
       response 422, 'Unprocessable entity' do
-        schema type: :object,
-          properties: {
-            errors: {
-              type: :object,
-              properties: {
-                name: {
-                  type: :array,
-                  item: { type: :string }
-                }
-              }
-            }
-          }
+       schema '$ref' => '#components/schemas/error_record'
 
         let(:id) { user_data.id }
         let(:user_params) { { name: nil } }

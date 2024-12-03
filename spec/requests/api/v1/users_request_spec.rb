@@ -14,12 +14,12 @@ RSpec.describe "User Request", type: :request do
       it 'returns 422' do
         post api_v1_users_path, params: invalid_attributes
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(JSON.parse(response.body)).to eq({ "errors" => { "name" => [ "can't be blank" ] } })
+        expect(response).to match_contract(ApiGenericError)
       end
     end
 
     context 'data valid' do
-      it 'returns status 201' do
+     it 'returns status 201' do
         post api_v1_users_path, params: valid_attributes
         expect(response).to have_http_status(:created)
       end

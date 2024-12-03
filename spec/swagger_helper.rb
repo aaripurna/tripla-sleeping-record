@@ -31,7 +31,53 @@ RSpec.configure do |config|
             }
           }
         }
-      ]
+      ],
+      components: {
+        schemas: {
+          user_record: {
+            type: :object,
+            properties: {
+              id: { type: :integer },
+              name: { type: :string },
+              created_at: { type: :string, format: 'date-time' },
+              updated_at: { type: :string, format: 'date-time' }
+            }
+          },
+          user_single_record: {
+            type: :object,
+            properties: {
+              data: {
+                type: :object,
+                properties: {
+                  id: { type: :string, example: '10' },
+                  type: { type: :string, example: 'user' },
+                  attributes: { '$ref' => '#/components/schemas/user_record' }
+                }
+              }
+            }
+          },
+          error_record: {
+            type: :object,
+            properties: {
+              errors: {
+                type: :array,
+                items: {
+                  type: :object,
+                  properties: {
+                    source: {
+                      type: :object,
+                      properties: {
+                        pointer: { type: :string }
+                      }
+                    },
+                    detail: { type: :string }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 

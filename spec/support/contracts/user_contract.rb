@@ -21,8 +21,10 @@ end
 
 class UserSingleRecordContract < Dry::Validation::Contract
   params do
-    required(:attributes).schema(UserRecordContract.schema)
-    required(:id).filled(:string)
-    required(:type).filled(:string, eql?: 'user')
+    required(:data).hash do
+      required(:attributes).schema(UserRecordContract.schema)
+      required(:id).filled(:string)
+      required(:type).filled(:string, eql?: 'user')
+    end
   end
 end
