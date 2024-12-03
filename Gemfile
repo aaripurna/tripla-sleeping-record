@@ -48,4 +48,6 @@ group :development, :test do
   gem "database_cleaner-active_record"
   gem "shoulda-matchers", "~> 6.0"
   gem "dry-validation", "~> 1.10"
+  gem "rswag"
+  gem "rswag-specs"
 end
