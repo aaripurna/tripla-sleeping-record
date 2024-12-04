@@ -16,6 +16,8 @@ module Api
         if follow.destroy!
           head :ok
         end
+      rescue ActiveRecord::RecordNotFound
+        render json: ErrorSerializer.new([ ActiveModel::Error.new(OpenStruct.new, :followee_id, "not found") ]), status: :not_found
       end
 
       private

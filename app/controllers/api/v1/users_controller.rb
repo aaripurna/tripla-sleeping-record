@@ -15,6 +15,8 @@ module Api
       def show
         user = User.find(params[:id])
         render json: UserSerializer.new(user).serializable_hash, status: :ok
+      rescue ActiveRecord::RecordNotFound
+        render json: ErrorSerializer.new([ ActiveModel::Error.new(OpenStruct.new, :id, "not found") ]), status: :not_found
       end
 
       def update
@@ -25,6 +27,8 @@ module Api
         else
           render json: ErrorSerializer.new(user.errors), status: :unprocessable_entity
         end
+      rescue ActiveRecord::RecordNotFound
+        render json: ErrorSerializer.new([ ActiveModel::Error.new(OpenStruct.new, :id, "not found") ]), status: :not_found
       end
 
       def index
