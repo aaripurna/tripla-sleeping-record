@@ -79,6 +79,29 @@ RSpec.configure do |config|
               }
             }
           },
+          following_record: {
+            type: :object,
+            properties: {
+              id: { type: :integer, example: 19 },
+              follower_id: { type: :integer, example: 2 },
+              followeee_id: { type: :integer, example: 8 },
+              created_at: { type: :string, format: 'date-time' },
+              updated_at: { type: :string, format: 'date-time' }
+            }
+          },
+          following_single_record: {
+            type: :object,
+            properties: {
+              data: {
+                type: :object,
+                properties: {
+                  id: { type: :string, example: '10' },
+                  type: { type: :string, example: 'user' },
+                  attributes: { '$ref' => '#/components/schemas/following_record' }
+                }
+              }
+            }
+          },
           pagination_links: {
             type: :object,
             properties: {

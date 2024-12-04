@@ -4,6 +4,37 @@ info:
   title: API V1
   version: v1
 paths:
+  "/api/v1/follows":
+    post:
+      summary: Create Follow
+      tags:
+      - Following
+      parameters: []
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/following_single_record"
+        '422':
+          description: Unprocessable entity
+          content:
+            application/json:
+              schema:
+                "$ref": "#components/schemas/error_record"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                follower_id:
+                  type: integer
+                  example: 10
+                followee_id:
+                  type: integer
+                  example: 45
   "/api/v1/users":
     post:
       summary: Create User
@@ -156,6 +187,38 @@ components:
           properties:
             pagination:
               "$ref": "#/components/schemas/pagination_details"
+    following_record:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 19
+        follower_id:
+          type: integer
+          example: 2
+        followeee_id:
+          type: integer
+          example: 8
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    following_single_record:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              example: '10'
+            type:
+              type: string
+              example: user
+            attributes:
+              "$ref": "#/components/schemas/following_record"
     pagination_links:
       type: object
       properties:

@@ -1,5 +1,3 @@
-require 'swagger_helper'
-
 describe 'Users API' do
   path '/api/v1/users' do
     post 'Create User' do
