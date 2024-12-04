@@ -2,9 +2,9 @@ module Api
   module V1
     class FollowsController < ApiController
       def create
-        follow = Following.new(create_follow_params)
+        follow = Follow.new(create_follow_params)
         if follow.save
-          render json: FollowingSerializer.new(follow).serializable_hash, status: :created
+          render json: FollowSerializer.new(follow).serializable_hash, status: :created
         else
           render json: ErrorSerializer.new(follow.errors), status: :unprocessable_entity
         end

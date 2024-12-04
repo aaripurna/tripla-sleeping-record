@@ -2,7 +2,7 @@ class FollowSingleRecordContract < Dry::Validation::Contract
   params do
     required(:data).hash do
       required(:id).filled(:string)
-      required(:type).filled(:string, eql?: 'following')
+      required(:type).filled(:string, eql?: 'follow')
       required(:attributes).hash do
         required(:id).filled(:integer)
         required(:follower_id).filled(:integer)

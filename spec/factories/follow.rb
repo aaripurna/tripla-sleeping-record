@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :following do
+  factory :follow do
     follower
     following
   end
