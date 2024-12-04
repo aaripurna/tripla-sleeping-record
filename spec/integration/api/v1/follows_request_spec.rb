@@ -40,4 +40,33 @@ describe 'Follows API' do
       end
     end
   end
+
+  path '/api/v1/follows/unfollow' do
+    delete 'Unfollow a user' do
+      tags 'Following'
+      consumes 'application/json'
+      produces 'application/json'
+      parameter name: :following, in: :body, schema: {
+        type: :object,
+        properties: {
+          follower_id: { type: :integer, example: 10 },
+          followee_id: { type: :integer, example: 45 }
+        }
+      }
+
+      before do
+        create(:follow, follower_id: user_1.id, followee_id: user_2.id)
+      end
+
+      response 200, 'Success' do
+        let(:following) { { follower_id: user_1.id, followee_id: user_2.id } }
+        run_test!
+      end
+
+      response 404, 'Not Found' do
+        let(:following) { { follower_id: user_1.id, followee_id: 40_000 } }
+        run_test!
+      end
+    end
+  end
 end

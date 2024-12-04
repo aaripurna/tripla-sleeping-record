@@ -29,4 +29,23 @@ RSpec.describe "Follows Request", type: :request do
       end
     end
   end
+
+  describe "#unfollow" do
+    context 'when the Follow does not exist' do
+      it 'returns 404' do
+        delete unfollow_api_v1_follows_path, params: { follower_id: user_1.id, followee_id: 30_0000 }
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    context 'when the Follow exists' do
+      before do
+        create(:follow, follower_id: user_1.id, followee_id: user_2.id)
+      end
+      it 'returns success' do
+        delete unfollow_api_v1_follows_path, params: { follower_id: user_1.id, followee_id: user_2.id }
+        expect(response).to have_http_status(:ok)
+      end
+    end
+  end
 end

@@ -12,7 +12,11 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :users
-      resources :follows, only: [ :create ]
+      resources :follows, only: [ :create ] do
+        collection do
+          delete :unfollow
+        end
+      end
     end
   end
 end

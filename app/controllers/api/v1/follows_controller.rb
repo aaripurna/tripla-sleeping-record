@@ -10,6 +10,14 @@ module Api
         end
       end
 
+      def unfollow
+        follow = Follow.find_by!(follower_id: params[:follower_id], followee_id: params[:followee_id])
+
+        if follow.destroy!
+          head :ok
+        end
+      end
+
       private
 
       def create_follow_params

@@ -35,6 +35,29 @@ paths:
                 followee_id:
                   type: integer
                   example: 45
+  "/api/v1/follows/unfollow":
+    delete:
+      summary: Unfollow a user
+      tags:
+      - Following
+      parameters: []
+      responses:
+        '200':
+          description: Success
+        '404':
+          description: Not Found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                follower_id:
+                  type: integer
+                  example: 10
+                followee_id:
+                  type: integer
+                  example: 45
   "/api/v1/users":
     post:
       summary: Create User
