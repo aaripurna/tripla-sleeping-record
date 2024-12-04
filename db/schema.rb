@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_12_04_094151) do
+ActiveRecord::Schema[8.0].define(version: 2024_12_04_110300) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -24,6 +24,16 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_04_094151) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id", "schedule_date"], name: "index_clock_in_summaries_on_user_id_and_schedule_date", unique: true
+  end
+
+  create_table "clock_ins", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.datetime "event_time", null: false
+    t.integer "event_type", null: false
+    t.date "schedule_date", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "schedule_date", "event_type"], name: "index_clock_ins_on_user_id_and_schedule_date_and_event_type", unique: true
   end
 
   create_table "follows", force: :cascade do |t|
