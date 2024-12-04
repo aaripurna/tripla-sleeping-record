@@ -68,6 +68,17 @@ paths:
       summary: Fetch List Of Users
       tags:
       - User
+      parameters:
+      - name: page
+        in: query
+        example: 1
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        example: 32
+        schema:
+          type: integer
       responses:
         '200':
           description: Ok
@@ -131,7 +142,7 @@ paths:
               required:
               - name
 servers:
-- url: https://{defaultHost}
+- url: http://{defaultHost}
   variables:
     defaultHost:
       default: 127.0.0.1:3000

@@ -30,6 +30,8 @@ describe 'Users API' do
     get 'Fetch List Of Users' do
       tags 'User'
       produces 'application/json'
+      parameter name: :page, in: :query, type: :integer, example: 1
+      parameter name: :limit, in: :query, type: :integer, example: 32
       let!(:user1) { create(:user, name: 'Foo Bar') }
       let!(:user2) { create(:user, name: 'Foo Bar') }
       let!(:user3) { create(:user, name: 'Foo Bar') }
@@ -37,6 +39,8 @@ describe 'Users API' do
 
       response 200, 'Ok' do
         schema '$ref' => '#components/schemas/user_list_record'
+        let(:page) { 2 }
+        let(:limit) { 1 }
         run_test!
       end
     end
