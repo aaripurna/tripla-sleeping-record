@@ -1,3 +1,5 @@
+require "swagger_helper"
+
 describe 'Follows API' do
   let!(:user_1) { create(:user, name: "Gus Fring") }
   let!(:user_2) { create(:user, name: "Walter White") }
