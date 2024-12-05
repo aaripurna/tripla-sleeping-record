@@ -11,7 +11,9 @@ Rails.application.routes.draw do
   # root "posts#index"
   namespace :api do
     namespace :v1 do
-      resources :users
+      resources :users do
+        resources :clock_ins, only: [ :create ]
+      end
       resources :follows, only: [ :create ] do
         collection do
           delete :unfollow

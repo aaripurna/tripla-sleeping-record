@@ -102,6 +102,31 @@ RSpec.configure do |config|
               }
             }
           },
+          clock_in_record: {
+            type: :object,
+            properties: {
+              id: { type: :integer, example: 10 },
+              user_id: { type: :integer, example: 1 },
+              event_time: { type: :string, format: 'date-time' },
+              event_type: { type: :string, enum: %w[sleep_start sleep_end] },
+              schedule_date: { type: :string, format: 'date' },
+              created_at: { type: :string, format: 'date-time' },
+              updated_at: { type: :string, format: 'date-time' }
+            }
+          },
+          clock_in_single_record: {
+            type: :object,
+            properties: {
+              data: {
+                type: :object,
+                properties: {
+                  id: { type: :string, example: '10' },
+                  type: { type: :string, example: 'user' },
+                  attributes: { '$ref' => '#/components/schemas/clock_in_record' }
+                }
+              }
+            }
+          },
           pagination_links: {
             type: :object,
             properties: {

@@ -1,6 +1,7 @@
 class ClockInCreateForm
   include ActiveModel::Model
   attr_accessor :user_id, :event_type
+  attr_reader :clock_in
 
   validate :clock_in_record_validation
 
@@ -10,7 +11,7 @@ class ClockInCreateForm
   end
 
   def save
-    false if invalid?
+    return false if invalid?
 
     ActiveRecord::Base.transaction do
       summary = if @clock_in.sleep_start?
@@ -60,5 +61,7 @@ class ClockInCreateForm
     else
       @clock_in.schedule_date = latest_sleep_start.schedule_date
     end
+  rescue ActiveRecord::RecordNotFound
+    errors.add(:event_type, "must be done after sleep start")
   end
 end

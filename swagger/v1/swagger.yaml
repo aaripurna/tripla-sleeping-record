@@ -4,6 +4,44 @@ info:
   title: API V1
   version: v1
 paths:
+  "/api/v1/users/{user_id}/clock_ins":
+    post:
+      summary: Create Clock In Record
+      tags:
+      - Clock In
+      parameters:
+      - name: user_id
+        in: path
+        description: User ID which the clock in will be performed for
+        required: true
+        schema:
+          type: integer
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/clock_in_single_record"
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error_record"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                event_type:
+                  type: string
+                  enum:
+                  - sleep_start
+                  - sleep_end
+              required:
+              - event_type
   "/api/v1/follows":
     post:
       summary: Create Follow
@@ -253,6 +291,46 @@ components:
               example: user
             attributes:
               "$ref": "#/components/schemas/following_record"
+    clock_in_record:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 10
+        user_id:
+          type: integer
+          example: 1
+        event_time:
+          type: string
+          format: date-time
+        event_type:
+          type: string
+          enum:
+          - sleep_start
+          - sleep_end
+        schedule_date:
+          type: string
+          format: date
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    clock_in_single_record:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              example: '10'
+            type:
+              type: string
+              example: user
+            attributes:
+              "$ref": "#/components/schemas/clock_in_record"
     pagination_links:
       type: object
       properties:
