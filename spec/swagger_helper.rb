@@ -127,6 +127,29 @@ RSpec.configure do |config|
               }
             }
           },
+          clock_in_list_record: {
+            type: :object,
+            properties: {
+              data: {
+                type: :array,
+                items: {
+                  type: :object,
+                  properties: {
+                    id: { type: :string, example: '10' },
+                    type: { type: :string, example: 'clock_in' },
+                    attributes: { '$ref' => '#/components/schemas/clock_in_record' }
+                  }
+                }
+              },
+              links: { '$ref' => '#/components/schemas/pagination_links' },
+              meta: {
+                type: :object,
+                properties: {
+                  pagination: { '$ref' => '#/components/schemas/pagination_details' }
+                }
+              }
+            }
+          },
           pagination_links: {
             type: :object,
             properties: {

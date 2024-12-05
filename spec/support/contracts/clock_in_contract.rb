@@ -19,3 +19,18 @@ class ClockInSingleRecord < Dry::Validation::Contract
     end
   end
 end
+
+class ClockInListRecord < Dry::Validation::Contract
+  params do
+    required(:data).array(:hash) do
+      required(:type).filled(:string, eql?: "clock_in")
+      required(:id).filled(:string)
+      required(:attributes).schema(ClockInRecord.schema)
+    end
+
+    required(:meta).hash do
+      required(:pagination).schema(PaginationContract.schema)
+    end
+    required(:links).schema(PaginationLinkContract.schema)
+  end
+end
