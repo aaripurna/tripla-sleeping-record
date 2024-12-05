@@ -4,5 +4,5 @@ class ClockInSummary < ApplicationRecord
   validates_presence_of [ :schedule_date, :user_id  ]
   validates_uniqueness_of :schedule_date, scope: :user_id
 
-  enum :status, uncompleted: 0, sleep_start: 1, completed: 2
+  enum :status, incomplete: 0, completed: 1
 end
