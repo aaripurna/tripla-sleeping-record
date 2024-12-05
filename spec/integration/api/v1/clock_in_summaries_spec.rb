@@ -50,4 +50,34 @@ describe "Sleeping Record API" do
       end
     end
   end
+
+  path "/api/v1/users/{user_id}/clock_in_summaries/followings" do
+    get "Get the sleep records of user's following list" do
+      include_context "followings sleep records"
+
+      tags "Sleeping Record"
+      produces "application/json"
+      parameter name: :user_id, in: :path, type: :integer, description: "User ID which the clock in will be performed for"
+      parameter name: :page, in: :query, type: :integer, required: false
+      parameter name: :limit, in: :query, type: :integer, required: false
+      parameter name: :start_date, in: :query, required: false, description: "optional, the default value will be from the beginning of previous week", schema: {
+        type: :string, format: "date"
+      }
+      parameter name: :end_date, in: :query, required: false, description: "optional, the default value will be the current date", schema: {
+        type: :string, format: "date"
+      }
+
+      before do
+        travel_to Time.zone.parse("2024-01-06")
+      end
+
+      after { travel_back }
+
+      response 200, "Success" do
+        schema "$ref" => "#/components/schemas/summary_clock_in_list_record"
+        let(:user_id) { user.id }
+        run_test!
+      end
+    end
+  end
 end

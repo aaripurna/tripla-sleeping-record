@@ -172,7 +172,7 @@ RSpec.configure do |config|
                   type: :object,
                   properties: {
                     id: { type: :string, example: '10' },
-                    type: { type: :string, example: 'clock_in' },
+                    type: { type: :string, example: 'clock_in_summary' },
                     attributes: { '$ref' => '#/components/schemas/summary_clock_in_record' }
                   }
                 }

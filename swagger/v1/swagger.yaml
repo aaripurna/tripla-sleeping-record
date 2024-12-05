@@ -47,6 +47,50 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/summary_clock_in_list_record"
+  "/api/v1/users/{user_id}/clock_in_summaries/followings":
+    get:
+      summary: Get the sleep records of user's following list
+      tags:
+      - Sleeping Record
+      parameters:
+      - name: user_id
+        in: path
+        description: User ID which the clock in will be performed for
+        required: true
+        schema:
+          type: integer
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: start_date
+        in: query
+        required: false
+        description: optional, the default value will be from the beginning of previous
+          week
+        schema:
+          type: string
+          format: date
+      - name: end_date
+        in: query
+        required: false
+        description: optional, the default value will be the current date
+        schema:
+          type: string
+          format: date
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/summary_clock_in_list_record"
   "/api/v1/users/{user_id}/clock_ins":
     post:
       summary: Create Clock In Record
@@ -469,7 +513,7 @@ components:
                 example: '10'
               type:
                 type: string
-                example: clock_in
+                example: clock_in_summary
               attributes:
                 "$ref": "#/components/schemas/summary_clock_in_record"
         links:

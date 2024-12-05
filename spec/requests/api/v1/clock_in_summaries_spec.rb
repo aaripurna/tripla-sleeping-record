@@ -40,4 +40,24 @@ RSpec.describe "Clock In Summary" do
       expect(response).to match_contract(ClockInSummaryListRecord)
     end
   end
+
+  describe "#followings" do
+    include_context "followings sleep records"
+
+    before do
+      travel_to Time.zone.parse("2024-01-06")
+    end
+
+    after { travel_back }
+
+    it "returns status 200" do
+      get followings_api_v1_user_clock_in_summaries_path(user_id: user.id)
+      expect(response).to have_http_status(:ok)
+    end
+
+    it "returns the summary list object" do
+      get followings_api_v1_user_clock_in_summaries_path(user_id: user.id)
+      expect(response).to match_contract(ClockInSummaryListRecord)
+    end
+  end
 end

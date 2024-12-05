@@ -13,7 +13,11 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users do
         resources :clock_ins, only: [ :create, :index ]
-        resources :clock_in_summaries, only: [ :index ]
+        resources :clock_in_summaries, only: [ :index ] do
+          collection do
+            get :followings
+          end
+        end
       end
       resources :follows, only: [ :create ] do
         collection do
