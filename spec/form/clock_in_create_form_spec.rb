@@ -8,7 +8,7 @@ RSpec.describe ClockInCreateForm do
 
   subject(:form) { described_class.new(params) }
 
-  fdescribe "#save" do
+  describe "#save" do
     context "data invalid" do
       context "sleep_end before sleep start" do
         let(:event_type) { :sleep_end }
