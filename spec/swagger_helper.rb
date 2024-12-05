@@ -150,6 +150,42 @@ RSpec.configure do |config|
               }
             }
           },
+          summary_clock_in_record: {
+            type: :object,
+            properties: {
+              id: { type: :integer, example: 1 },
+              user_id: { type: :integer, example: 100 },
+              schedule_date: { type: :string, format: 'date' },
+              sleep_start: { type: :string, format: 'date-time', nullable: true },
+              sleep_end: { type: :string, format: 'date-time', nullable: true },
+              status: { type: :string, enum: %w[completed incomplete] },
+              created_at: { type: :string, format: 'date-time' },
+              updated_at: { type: :string, format: 'date-time' }
+            }
+          },
+          summary_clock_in_list_record: {
+            type: :object,
+            properties: {
+              data: {
+                type: :array,
+                items: {
+                  type: :object,
+                  properties: {
+                    id: { type: :string, example: '10' },
+                    type: { type: :string, example: 'clock_in' },
+                    attributes: { '$ref' => '#/components/schemas/summary_clock_in_record' }
+                  }
+                }
+              },
+              links: { '$ref' => '#/components/schemas/pagination_links' },
+              meta: {
+                type: :object,
+                properties: {
+                  pagination: { '$ref' => '#/components/schemas/pagination_details' }
+                }
+              }
+            }
+          },
           pagination_links: {
             type: :object,
             properties: {
