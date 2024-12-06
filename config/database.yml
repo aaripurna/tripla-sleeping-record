@@ -21,6 +21,7 @@ default: &default
   # username: <%= ENV.fetch("DATABASE_USERNAME") { 'postgres' } %>
   host: <%= ENV.fetch("DATABASE_HOSTNAME") { '127.0.0.1' } %>
   username: <%= ENV.fetch("DATABASE_USERNAME") { 'postgres' } %>
+  password: <%= ENV.fetch("DATABASE_PASSWORD") { '' } %>
 development:
   <<: *default
   database: tripla_development

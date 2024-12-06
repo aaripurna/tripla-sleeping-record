@@ -1,24 +1,37 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Requirement
+- Ruby 3.2.2
+- Bundler
+- Rails -v 8
+- Postgresql
 
-Things you may want to cover:
+## Setting up
+Copy file `dev.env` to .`env`and then fill the required variable for the database
+```sh
+DATABASE_HOSTNAME=
+DATABASE_USERNAME=
+DATABASE_PASSWORD=
+```
 
-* Ruby version
+Now we're are ready to run the application. But first we need to setup the development database. Run the command
 
-* System dependencies
+```sh
+rails db:setup
+rails db:migrate
+```
+And then we can run the server with this command
+```sh
+rails s -b 127.0.0.1 -p 3000
+```
 
-* Configuration
+you now can visit the application [here](http://127.0.0.1:3000/).
 
-* Database creation
+you can also visit the [Open API Documentation](http://127.0.0.1:3000/api-docs/index.html).
 
-* Database initialization
+You can also add the sample data to the database by running this command:
+```sh
+rails db:seed
+```
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+You can use user named "Lucy" as the test user
